@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification de l'identité</title>
+    <style>
+        body {
+            background: black;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        #terminal { white-space: pre-wrap; margin-bottom: 20px; }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00ff00;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="terminal"></div>
+    <span id="cursor" class="cursor"></span>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const cursor = document.getElementById('cursor');
+
+        // Simulation de printf et sleep
+        async function ecrire(texte, delai = 50) {
+            for (let char of texte) {
+                terminal.textContent += char;
+                window.scrollTo(0, document.body.scrollHeight);
+                await new Promise(r => setTimeout(r, delai));
+            }
+        }
+
+        async function pause(ms) {
+            await new Promise(r => setTimeout(r, ms));
+        }
+
+        async function main() {
+            let score = 0;
+
+            await ecrire("✨ Bonjour ✨\n");
+            await ecrire("Si ce programme vous est parvenu, c'est probablement que vous êtes quelqu'une de spéciale.\n\n");
+            await ecrire("🔍 Vérification de l'identité en cours...\n");
+            await pause(1000);
+            await ecrire("📂 Chargement des informations...\n");
+            await pause(2000);
+            await ecrire("⏳ Accès initial en attente...\n\n");
+            await pause(1000);
+
+            let prenom = prompt("📝 Veuillez entrer votre prénom :");
+            if (!prenom) return;
+            prenom = prenom.trim().toLowerCase();
+
+            if (prenom === "yasmina" || prenom === "anielle") {
+                await ecrire("\n✅ Accès autorisé. Bienvenue " + prenom + ".\n\n");
+                await pause(1000);
+
+                // Question 1 : Couleur
+                let couleur;
+                do {
+                    couleur = prompt("🎨 Question 1 : Quelle est ta couleur préférée ?");
+                    if (!couleur) break;
+                    couleur = couleur.trim().toLowerCase();
+
+                    if (couleur === "violet") {
+                        await ecrire("\n🌈 Bonne réponse. Ce programme semble bien parler à la bonne personne.\n\n");
+                        score++;
+                    } else {
+                        await ecrire("\n⚠️ Hmm... c'est suspect. Réessaie encore.\n\n");
+                    }
+                } while (couleur !== "violet");
+                await pause(2000);
+
+                // Question 2 : Artiste
+                let artiste;
+                const artistesValides = ["didi b", "joe", "himra", "joe dwet file"];
+                do {
+                    artiste = prompt("🎶 Question 2 : Quel est ton artiste préféré ?");
+                    if (!artiste) break;
+                    artiste = artiste.trim().toLowerCase();
+
+                    if (artistesValides.includes(artiste)) {
+                        await ecrire("\n Faut croire que tu as décidément un très bon goût🎵.\n\n");
+                        score++;
+                    } else {
+                        await ecrire("\n❌ Pas tout à fait... mais on te laisse une seconde chance.\n\n");
+                    }
+                } while (!artistesValides.includes(artiste));
+                await pause(2000);
+
+                // Question 3 : Âge
+                let age = prompt("🎂 Question 3 : Quel âge viens-tu d'avoir aujourd'hui ?");
+                if (parseInt(age) === 18) {
+                    await ecrire("\n 18 ans ? Difficile à croire...\n");
+                    await pause(1000);
+                    await ecrire(" On dirait bien que la maturité était en avance chez toi.\n\n");
+                    score++;
+                } else {
+                    await ecrire("\nℹ️ Merci pour l'information.\n\n");
+                }
+                await pause(2000);
+
+                // Question 4 : Femme claire
+                let reponseFemme = prompt("Question 4 : Es-tu une femme claire ? (oui/non)");
+                if (reponseFemme && reponseFemme.trim().toLowerCase() === "oui") {
+                    await ecrire("\n On raconte que les femmes claires et sincères deviennent rares💎.\n");
+                    await pause(1000);
+                    await ecrire(" On m'a fait tes louanges comme quoi tu en fais partie...\n");
+                    await pause(1000);
+                    await ecrire(" Alors toutes nos félicitations🎊.\n\n");
+                }
+                await pause(2000);
+
+                await ecrire("\n🔎 Analyse des réponses...\n");
+                await pause(2000);
+                await ecrire(" Compatibilité avec le programme : " + score + "/3\n");
+                await pause(1000);
+
+                if (score === 3) {
+                    await ecrire("\n🌟 Wow ! On dirait que tu es vraiment la personne spéciale qu'on cherchait.\n\n");
+                } else if (score === 2) {
+                    await ecrire("\n👍 Pas mal ! Mais peut-être que quelques détails t'ont échappé.\n\n");
+                } else {
+                    await ecrire("\n🤔 Hmm... on devra vérifier ces informations plus tard.\n\n");
+                }
+                await pause(2000);
+
+                await ecrire("\n✅ Analyse terminée...\n");
+                await pause(1000);
+                await ecrire("💖 Verdict : personnalité remarquable détectée.\n\n");
+                await pause(2000);
+
+                await ecrire("--------------------------------------------------\n\n");
+                await ecrire("🎂 Joyeux anniversaire " + prenom + " ! 🎂\n\n");
+                await pause(2000);
+                await ecrire(" Que cette nouvelle année t'apporte encore plus de joie🌸,\n");
+                await pause(2000);
+                await ecrire(" de réussite et de beaux moments partagés.\n\n");
+                await pause(3000);
+                await ecrire(" Merci pour la lumière et la bonne énergie que tu apportes autour de toi...\n");
+                await pause(2000);
+                await ecrire(" et particulièrement dans la vie de mon pote🤝.\n\n");
+                await pause(3000);
+                await ecrire(" En fin de compte c'est lui qui est chanceux de t'avoir trouvé💌.\n\n");
+                await pause(2000);
+                await ecrire("🎉 Aujourd'hui, on célèbre non seulement ton âge,\n");
+                await pause(3000);
+                await ecrire(" mais aussi la personne incroyable que tu es devenue.🌟\n\n");
+                await pause(3000);
+                await ecrire("------ENCORE UNE FOIS HAPPY BIRTHDAY----------------------\n\n");
+
+            } else {
+                await ecrire("\n🚫 Désolé.\n");
+                await ecrire("Ce programme ne semble pas vous être destiné.\n");
+            }
+        }
+
+        main();
+    </script>
+</body>
+</html>
