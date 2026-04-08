@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Accès sécurisé</title>
+
+<style>
+body{
+background:black;
+color:#00ff00;
+font-family:monospace;
+padding:20px;
+font-size:18px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<script>
+
+const messages = [
+"✨ Bonjour ✨",
+"",
+"🔍 Vérification de l'identité en cours...",
+"📂 Chargement des informations...",
+"⏳ Accès initial en attente...",
+"",
+"🎂 Joyeux anniversaire 🎂",
+"",
+"Que cette nouvelle année t'apporte encore plus de joie.",
+"De réussite et de beaux moments partagés.",
+"",
+"Merci pour la lumière et la bonne énergie que tu apportes autour de toi.",
+"",
+"Et particulièrement dans la vie de mon pote 🤝",
+"",
+"Encore une fois Happy Birthday 🎉"
+];
+
+let i = 0;
+
+function afficher(){
+if(i < messages.length){
+document.getElementById("terminal").innerHTML += messages[i] + "<br>";
+i++;
+setTimeout(afficher,1500);
+}
+}
+
+afficher();
+
+</script>
+
+</body>
+</html>
