@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès sécurisé</title>
+    <style>
+        body {
+            background: black;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        #terminal {
+            white-space: pre-wrap; /* Garde le formatage du texte */
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00ff00;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="terminal"></div>
+    <span class="cursor"></span>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+
+        // Fonction pour simuler l'écriture automatique (comme un terminal)
+        function ecrire(texte, callback) {
+            let i = 0;
+            let interval = setInterval(() => {
+                terminal.textContent += texte[i];
+                i++;
+                if (i === texte.length) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 50); // Vitesse d'écriture
+        }
+
+        // Lancement du "programme"
+        window.onload = () => {
+            ecrire("Initialisation du système...\nAnalyse des protocoles en cours...\n\n", () => {
+                
+                // Le "prompt" remplace le scanf du langage C
+                // Il gère naturellement les espaces et les accents (ex: "Jérôme")
+                let reponse = prompt("Veuillez entrer le mot de passe ou votre nom :");
+
+                if (reponse) {
+                    terminal.textContent += "> " + reponse + "\n\n";
+                    
+                    // On utilise trim() pour ignorer les espaces accidentels au début/fin
+                    // Et on peut comparer avec des accents sans problème
+                    if (reponse.trim().toLowerCase() === "anniversaire") {
+                        ecrire("ACCÈS AUTORISÉ.\n\nChargement du module cadeau...\nJoyeux Anniversaire ! 🎂");
+                    } else {
+                        ecrire("Utilisateur reconnu : " + reponse + ".\nBienvenue sur votre interface personnalisée.");
+                    }
+                } else {
+                    ecrire("Erreur : Saisie vide. Système verrouillé.");
+                }
+            });
+        };
+    </script>
+</body>
+</html>
